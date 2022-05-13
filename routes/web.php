@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategorieController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,5 +30,19 @@ Route::get('/contact', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
+
+Route::get('/admin/categories', [CategorieController::class, 'index'])->middleware(['auth', 'admin'])->name('categories.index');
+
+Route::get('/admin/categorie', [CategorieController::class, 'create'])->middleware(['auth', 'admin'])->name('categories.create');
+
+Route::post('/admin/categorie', [CategorieController::class, 'store'])->middleware(['auth', 'admin'])->name('categories.store');
+
+Route::get('/admin/categorie/{categorie}', [CategorieController::class, 'show'])->middleware(['auth', 'admin'])->name('categories.show');
+
+Route::get('/admin/categorie/{categorie}/edit', [CategorieController::class, 'edit'])->middleware(['auth', 'admin'])->name('categories.edit');
+
+Route::put('/admin/categorie/{categorie}', [CategorieController::class, 'update'])->middleware(['auth', 'admin'])->name('categories.update');
+
+Route::delete('/admin/categorie/{categorie}', [CategorieController::class, 'destroy'])->middleware(['auth', 'admin'])->name('categories.delete');
 
 require __DIR__.'/auth.php';
